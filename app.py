@@ -21,7 +21,11 @@ def csv_pdf():
     return send_file(f"tmp/{filename}.pdf", download_name=f'{filename}.pdf')
 
 
-
+@app.after_request
+def delete_files(response):
+    if request.endpoint=="csv_pdf": 
+        os.remove("tmp/*")
+    return response
 
 
 if __name__ == "__main__":
