@@ -17,7 +17,11 @@ def csv_pdf():
         return "{'message':'No files attached.'}", 400
     
     file = request.files["csv"]
-    filename = file.filename.split(".")[0]
+    if not file:
+        return "{'message':'No files attached.'}", 400
+    filename, extension = file.filename.split(".")
+    if extension.lower() != 'csv':
+        return f"{{'message':'Wrong file type `{extension}`.'}}"
     if filename+'.pdf' in os.listdir(f'{PATH_TO_PDF}'):
         return send_file(f"{PATH_TO_PDF}/{filename}.pdf", download_name=f'{filename}.pdf')
     df = pandas.read_csv(file) 
