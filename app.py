@@ -23,7 +23,7 @@ def csv_pdf():
     if extension.lower() != 'csv':
         return f"{{'message':'Wrong file type `{extension}`.'}}"
     if filename+'.pdf' in os.listdir(f'{PATH_TO_PDF}'):
-        return send_file(f"{PATH_TO_PDF}/{filename}.pdf", download_name=f'{filename}.pdf')
+        return f"File saved as {PATH_TO_PDF}/{filename}.pdf", 200
     df = pandas.read_csv(file) 
     current_time = datetime.datetime.now()
     res = htmlmin.minify(f"<style>{MYSTYLE}</style><p>Report generated at : {current_time.strftime('%Y-%m-%d %H:%M')}</p>\
