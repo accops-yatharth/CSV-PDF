@@ -18,8 +18,8 @@ def csv_pdf():
     
     file = request.files["csv"]
     filename = file.filename.split(".")[0]
-    if filename+'.pdf' in os.listdir('tmp'):
-        return send_file(f"tmp/{filename}.pdf", download_name=f'{filename}.pdf')
+    if filename+'.pdf' in os.listdir(f'{PATH_TO_PDF}'):
+        return send_file(f"{PATH_TO_PDF}/{filename}.pdf", download_name=f'{filename}.pdf')
     df = pandas.read_csv(file) 
     current_time = datetime.datetime.now()
     res = htmlmin.minify(f"<style>{MYSTYLE}</style><p>Report generated at : {current_time.strftime('%Y-%m-%d %H:%M')}</p>\
